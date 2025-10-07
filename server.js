@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
     return res.end('Authentication required.');
   }
 
-  // Fix req.url
+  // Root '/' mở listAccount.html
   let reqPath = req.url === '/' ? 'listAccount.html' : req.url.replace(/^\/+/, '');
   let filePath = path.join(__dirname, 'public', reqPath);
 
@@ -47,4 +47,6 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(3000, () => console.log('Server chạy ở port 3000'));
+// ❗ SỬ DỤNG PORT DO RENDER CUNG CẤP
+const port = process.env.PORT || 3000;
+server.listen(port, () => console.log(`Server chạy ở port ${port}`));
