@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+<head>
+<meta charset="UTF-8">
+    <title>User Details</title>
+    <!-- <script src="../pako-min.js"></script> -->
+    <!-- <script src="../pako.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
+
+    <script src="../crypto-js.min.js"></script>	
+     <script src="../jquery.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+     <script src="../encrypt.js"></script>
+     <script src="../getToken.js"></script>
+     <script src="../servants.js"></script>
+     <script src="../miniEvents.js"></script>
+
+     <script src="../auto.js"></script>
+     <script src="../autoV2.js"></script>
+     <script src="../autoV3.js"></script>
+
+</head>
+<body>
+    <!-- Menu de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">EFAUNT</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="registerAccount.html">Register Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="listAccount.html">List Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="servantList.html">Servant List</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<div class="container">
+    <h1>User Details</h1>
+    <div id="user-details"></div>
+    <button onclick="auto()" class="btn btn-success">Run Daily Auto</button>
+    <button onclick="autoXingtian()" class="btn btn-warning">Xingtian</button>  
+    <button onclick="autoNew()" class="btn btn-danger">autoDot</button> 
+    <br>
+    <div class="accordion mb-1 mt-1" id="accordionExample" accordion-icon-color="#555">
+      <div class="accordion-item">
+        <h2 class="accordion-header " id="headingOne">
+          <button class="accordion-button bg-primary text-light mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            cot
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <button onclick="autoCot()" class="btn btn-info">Auto Local cot (censor)</button>
+                </div>
+                <div class="col-md-2">
+                    <button onclick="autoCotHeavenly()" class="btn btn-info">Auto TS cot (censor)</button>
+                </div>         
+                <div class="col-md-2">     
+                    <button onclick="autoCotCS()" class="btn btn-info">Auto CS cot (censor)</button>
+                </div>  
+                <div class="col-md-2">
+                    <button onclick="autoCotStorm()" class="btn btn-info">Auto Storm cot (censor)</button>
+                </div>  
+                <div class="col-md-2">
+                    <button onclick="autoCotACS()" class="btn btn-info">Auto ACS cot (censor)</button>
+                </div>  
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <button onclick="autoManualCot()" class="btn btn-primary">Manual Local cot</button>
+                </div>
+                <div class="col-md-2">
+                    <button onclick="autoManualCotCS()" class="btn btn-primary">Manual CS cot</button>
+                </div>
+                <div class="col-md-2">
+                    <button onclick="autoManualCotStorm()" class="btn btn-primary">Manual storm cot</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion mb-1" id="accordion2" accordion-icon-color="#555">
+      <div class="accordion-item">
+        <h2 class="accordion-header " id="headingOne">
+          <button class="accordion-button bg-info text-light mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            Temp events
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion2">
+          <div class="accordion-body">            
+            <button onclick="autoPeachEvent()" class="btn btn-warning">Manual Peach event</button>
+            <button onclick="autoChaosBattle()" class="btn btn-warning">Chaos Battle</button>      
+            <button onclick="autoSwordFly()" class="btn btn-warning">autoSwordFly (god realm or higher)</button>  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="accordion mb-1" id="accordion3" accordion-icon-color="#555">
+      <div class="accordion-item">
+        <h2 class="accordion-header " id="headingOne">
+          <button class="accordion-button bg-info text-light mb-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+            Conquest
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion3">
+          <div class="accordion-body">        
+            <div class="row col-md-2 mb-1">
+                <button onclick="autoBuildConquestReq()" class="btn btn-warning">Build islands conquest</button> 
+            </div>
+            <div class="row col-md-2">
+                <button onclick="autoPutTroopsConquestReq()" class="btn btn-warning">Add troops atk</button>
+                <select name="atkTroops" id="atkTroops" class="form-select">
+                  <option value="100000">100k</option>
+                  <option value="1000000">1M</option>
+                  <option value="10000000">10M</option>
+                  <option value="100000000">100M</option>
+                </select>   
+            </div>
+            <div class="row col-md-2">
+                <button onclick="autoPutDefTroopsConquestReq()" class="btn btn-warning">Add troops Def</button>
+                <select name="defTroops" id="defTroops" class="form-select">
+                  <option value="100000">100k</option>
+                  <option value="1000000">1M</option>
+                  <option value="10000000">10M</option>
+                  <option value="100000000">100M</option>
+                </select>   
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- <button onclick="autoNew3()" class="btn btn-danger">autoNewTest</button>  -->
+    <!-- <button onclick="autoTestReq()" class="btn btn-danger">testFunction</button>  -->
+     
+
+    
+    <p id="actions" style="height: 220px; resize: vertical;"></p>
+    <h2>daily tasks</h2>
+    <form id="user-form" >
+    <button type="submit" class="btn btn-primary">Submit</button></br></br>
+
+        <div class="row">
+            <div class="col ">
+                <!-- Contenu de la première moitié de l'écran -->
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doAllAds">Run ads :</label>
+                    <input class="form-check-input" type="checkbox" id="doAllAds" name="doAllAds">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doManLocCot">Manual Local CoT :</label>                    
+                    <input class="form-check-input" type="checkbox" id="doManLocCot" name="doManLocCot">
+                </div>                
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doManHeavenlyCot">Manual Heavenly CoT :</label>                    
+                    <input class="form-check-input" type="checkbox" id="doManHeavenlyCot" name="doManHeavenlyCot">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doManCSCot">Manual CS CoT :</label>                    
+                    <input class="form-check-input" type="checkbox" id="doManCSCot" name="doManCSCot">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doManStormCot">Manual Storm CoT :</label>                    
+                    <input class="form-check-input" type="checkbox" id="doManStormCot" name="doManStormCot">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doManACSCot">Manual ACS CoT :</label>                    
+                    <input class="form-check-input" type="checkbox" id="doManACSCot" name="doManACSCot">
+                </div>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doTree">Take care of friend trees :</label>
+                        <input class="form-check-input" type="checkbox" id="doTree" name="doTree">
+                        </br>
+                        <label class="form-check-label" for="doBeast">friend(s) id(s) :</label>
+                        <div class="col-md-6">
+                            <input class="form-control form-control-sm" type="text" id="doTree-ids" name="doTree-id" placeholder="id1,id2">
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doPchat">Pantheon chat :</label>
+                        <input class="form-check-input" type="checkbox" id="doPchat" name="doPchat">
+                        </br>
+                        <label for="pantheonWord">What you want to write in chat :</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control col-md-2" id="pantheonWord" name="pantheonWord">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doChaos">Do Chaos :</label>
+                        <input class="form-check-input" type="checkbox" id="doChaos" name="doChaos">
+                    </div>
+                </div>
+
+                <h2>Special rebate (remove after use)</h2>
+
+                <div class="row">
+                    <div class="col">
+                        <label class="form-check-label" for="doInteractEvent">Interact for event rebate :</label>
+                        <input class="form-check-input" type="checkbox" id="doInteractEvent" name="doInteractEvent">
+                        </br>
+                        <label for="doInteractEventNumber">Number of pills to use :</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="doInteractEventNumber" name="doInteractEventNumber">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!-- Contenu de la deuxième moitié de l'écran -->
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doWorship">Worship :</label>
+                        <input class="form-check-input" type="checkbox" id="doWorship" name="doWorship">
+                        </br>
+                        <label class="form-check-label" for="doBeast">Worship id :</label>
+                        <div class="col-md-4">
+                            <input class="form-control" type="number" id="doWorshipId" name="doWorshipId">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doBeast">Beast seal :</label>
+                        <input class="form-check-input" type="checkbox" id="doBeast" name="doBeast">
+                        </br>
+                        <label class="form-check-label" for="doBeast">Beast seal level :</label>
+                        <div class="col-md-2">
+                            <input class="form-control" type="number" id="beastLevel" name="doWorshipId">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doHell">Hell :</label>
+                        <input class="form-check-input" type="checkbox" id="doHell" name="doHell">
+                        </br>
+                        <label class="form-check-label" for="doHell">Hell number of attempts :</label>
+                        <div class="col-md-2">
+                            <input class="form-control" type="number" id="hellNumber" name="hellNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <div class="col">
+                        <label class="form-check-label" for="doSP">Spirit pact :</label>
+                        <input class="form-check-input" type="checkbox" id="doSP" name="doSP">
+                        </br>
+                        <label for="spNumber">Spirit pact Number (reco put more than spirit troop) :</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="spNumber" name="spNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-check-label" for="doST">Spirit troop :</label>
+                        <input class="form-check-input" type="checkbox" id="doST" name="doST">
+                        </br>
+                        <label for="stNumber">Spirit troop Number (reco put less than spirit pact) :</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="stNumber" name="stNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label class="form-check-label" for="doVV">VV :</label>
+                        <input class="form-check-input" type="checkbox" id="doVV" name="doVV">
+                        </br>
+                        <label for="vvNumber">VV stage (example 124) :</label>
+                        <div class="col-md-2">
+                            <input type="number" class="form-control" id="vvNumber" name="vvNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doXtd">Do Vanguard Generals task (14h-16h game time | just for panth activity) :</label>
+                    <input class="form-check-input" type="checkbox" id="doXtd" name="doXtd">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doAdventure">Run adventure level 20 (60 times) :</label>
+                    <input class="form-check-input" type="checkbox" id="doAdventure" name="doAdventure">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doBuildWood">BuildWood :</label>
+                    <input class="form-check-input" type="checkbox" id="doBuildWood" name="doBuildWood">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doReadAndDelMails">Read/Del mails :</label>
+                    <input class="form-check-input" type="checkbox" id="doReadAndDelMails" name="doReadAndDelMails">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doFL">FL (no boost)</label>
+                    <input class="form-check-input" type="checkbox" id="doFL" name="doFL">                
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doRobFL">Rob FL (only rob IA)</label>
+                    <input class="form-check-input" type="checkbox" id="doRobFL" name="doRobFL">                
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doCompete">Compete :</label>
+                    <input class="form-check-input" type="checkbox" id="doCompete" name="doCompete">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doBreathe">Breathe :</label>                   
+                    <input class="form-check-input" type="checkbox" id="doBreathe" name="doBreathe">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doVisit">Visit :</label>                   
+                    <input class="form-check-input" type="checkbox" id="doVisit" name="doVisit">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doInteract">Interact :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doInteract" name="doInteract">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doAccompany">Free accompany :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doAccompany" name="doAccompany">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doBrew">buy/brew once for sermon :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doBrew" name="doBrew">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doBUmap">buy/use map once for sermon :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doBUmap" name="doBUmap">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doRuin">Do Ruin :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doRuin" name="doRuin">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doMaxDemonSeal">Do Demon Tower :</label>                 
+                    <input class="form-check-input" type="checkbox" id="doMaxDemonSeal" name="doMaxDemonSeal">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="usePCandIT">Use Primordial chest and Inspector token:</label>                 
+                    <input class="form-check-input" type="checkbox" id="usePCandIT" name="usePCandIT">
+                </div>
+                <div class="form-row mb-1">
+                    <label class="form-check-label" for="doPantheonReward">Get Pantheon activity rewards :</label>                  
+                    <input class="form-check-input" type="checkbox" id="doPantheonReward" name="doPantheonReward">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h2>Shopping list</h2>
+            <div class="row">
+                <div class="col">
+                    <h3> Market beast resources </h3>
+                    <!-- Contenu de la première moitié de l'écran -->
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="beast-forage">Beast Forage :</label>   
+                            <input class="form-check-input" type="checkbox" id="beast-forage" name="beast-forage">
+                            </br>
+                            <label for="stNumber">Beast Forage quantity (price 500/u):</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="beast-forage-quantity" name="beast-forage-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="heaven-int-pill">Heaven int. pill (price 300/u):</label>   
+                            <input class="form-check-input" type="checkbox" id="heaven-int-pill" name="heaven-int-pill">
+                            </br>
+                            <label for="stNumber">Heaven int. pill quantity :</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="heaven-int-pill-quantity" name="heaven-int-pill-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="headen-crystal">Heaven Crystal (price 1500/u):</label> 
+                            <input class="form-check-input" type="checkbox" id="headen-crystal" name="headen-crystal">
+                            </br>
+                            <label for="stNumber">Heaven Crystal quantity :</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="headen-crystal-quantity" name="headen-crystal-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <h3> Boutique shop </h3>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyBoutiqueShop">Buy springs in boutique :</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyBoutiqueShop" name="buyBoutiqueShop">
+                    </div>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="useBoutiqueKey">Use boutique keys:</label>                 
+                        <input class="form-check-input" type="checkbox" id="useBoutiqueKey" name="useBoutiqueKey">
+                    </div>
+                    <h3> XT shop </h3>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="doXtShop">Buy XT shop:</label>                 
+                        <input class="form-check-input" type="checkbox" id="doXtShop" name="doXtShop">
+                    </div>
+                    <h3> Hell shop </h3>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="hellBfCheckbox">Beast Forage: </label>   
+                            <input class="form-check-input" type="checkbox" id="hellBfCheckbox" name="hellBfCheckbox">
+                            </br>
+                            <label for="hellBfQuantity">Beast Forage quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="hellBfQuantity" name="hellBfQuantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="hellHpCheckbox">Heaven int. pill: </label> 
+                            <input class="form-check-input" type="checkbox" id="hellHpCheckbox" name="hellHpCheckbox">
+                            </br>
+                            <label for="hellHpQuantity">Heaven int. pill quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="hellHpQuantity" name="hellHpQuantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="hellHcCheckbox">Heaven Crystal: </label> 
+                            <input class="form-check-input" type="checkbox" id="hellHcCheckbox" name="hellHcCheckbox">
+                            </br>
+                            <label for="hellHcQuantity">Heaven Crystal quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="hellHcQuantity" name="hellHcQuantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <!-- Contenu de la deuxième moitié de l'écran -->
+                    <h3> Ruin shop </h3>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyLimitedRuinShop">Buy all max limited Ruin shop:</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyLimitedRuinShop" name="buyLimitedRuinShop">
+                    </div>
+                    <h3> alliance shop </h3>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyLimitedAllianceShop">Buy all max limited alliance shop (except Bodhi only x2) :</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyLimitedAllianceShop" name="buyLimitedAllianceShop">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="origin-essence">Origin essence: </label>   
+                            <input class="form-check-input" type="checkbox" id="origin-essence" name="origin-essence">
+                            </br>
+                            <label for="origin-essence-quantity">Origin essence quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="origin-essence-quantity" name="origin-essence-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="origin-soul">Origin soul: </label> 
+                            <input class="form-check-input" type="checkbox" id="origin-soul" name="origin-soul">
+                            </br>
+                            <label for="origin-soul-quantity">Origin soul quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="origin-soul-quantity" name="origin-soul-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="origin-psicrystal">Origin psicrystal: </label> 
+                            <input class="form-check-input" type="checkbox" id="origin-psicrystal" name="origin-psicrystal">
+                            </br>
+                            <label for="origin-psicrystal-quantity">Origin psicrystal quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="origin-psicrystal-quantity" name="origin-psicrystal-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-check-label" for="origin-grit">Origin grit: </label> 
+                            <input class="form-check-input" type="checkbox" id="origin-grit" name="origin-grit">
+                            </br>
+                            <label for="origin-grit-quantity">Origin grit quantity</label>
+                            <div class="col-md-3">
+                                <input class="form-control" type="number" id="origin-grit-quantity" name="origin-grit-quantity" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <h3> Compete shop </h3>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyCompeteP4H1">Pill of Four Heavens (200x2):</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyCompeteP4H1" name="buyCompeteP4H1">
+                    </div>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyCompeteTPP1">Talent Pill Piece (160x2):</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyCompeteTPP1" name="buyCompeteTPP1">
+                    </div>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyCompeteP4H2">Pill of Four Heavens (250x3):</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyCompeteP4H2" name="buyCompeteP4H2">
+                    </div>
+                    <div class="form-row mb-1">
+                        <label class="form-check-label" for="buyCompeteTPP2">Talent Pill Piece (200x3):</label>                 
+                        <input class="form-check-input" type="checkbox" id="buyCompeteTPP2" name="buyCompeteTPP2">
+                    </div>
+                </div>
+                
+
+                <!-- Contenu de la deuxième moitié de l'écran -->
+
+                </div>
+            </div>
+            </br>
+            <button type="submit" class="btn btn-primary">Submit</button></br></br>
+            <button type="button" class="btn btn-danger" id="delete-button">DELETE USER</button>
+    </form>
+</div>
+
+<script>
+		// Récupération de l'index de l'utilisateur sélectionné depuis l'URL
+  const params = new URLSearchParams(window.location.search);
+  const index = params.get('userIndex');
+
+		// Récupération des informations de tous les utilisateurs depuis le localStorage
+  var auths = JSON.parse(localStorage.getItem('auths'));
+
+  const gameVersion = localStorage.getItem('gameVersion');
+		// Sélection de l'utilisateur correspondant à l'index
+  const auth = auths[index];
+		//console.log(auth);
+
+		// Affichage des informations de l'utilisateur sélectionné
+  const userDetails = document.getElementById('user-details');
+  userDetails.innerHTML = `
+  <p><strong>Login:</strong> ${auth.username}</p>
+  <p><strong>Name:</strong> ${auth.displayName}</p>
+  <p><strong>Server:</strong> ${auth.server}</p>
+  `;
+  function getPrice(startPrice,inc,num){
+     let total = 0;
+     for (let i = 1; i <= num; i++) {
+       total += (startPrice + inc * (i-1));
+   }
+   return total;
+}
+		// Récupération des champs du formulaire
+const doTreeCheckbox = document.getElementById('doTree');
+const doTreeIds = document.getElementById('doTree-ids');
+const doWorshipCheckbox = document.getElementById('doWorship');
+const doWorshipId = document.getElementById('doWorshipId');
+const doBeastCheckbox = document.getElementById('doBeast');
+const beastLevel = document.getElementById('beastLevel');		
+const doHellCheckbox = document.getElementById('doHell');
+const hellNumber = document.getElementById('hellNumber');
+const doPchatCheckbox = document.getElementById('doPchat');
+const pantheonWord = document.getElementById('pantheonWord');
+const doSPCheckbox = document.getElementById('doSP');
+const spNumber = document.getElementById('spNumber');
+const doSTCheckbox = document.getElementById('doST');
+const stNumber = document.getElementById('stNumber');
+const doVVCheckbox = document.getElementById('doVV');
+const vvNumber = document.getElementById('vvNumber');
+const doInteractEventCheckbox = document.getElementById('doInteractEvent');
+const doInteractEventNumber = document.getElementById('doInteractEventNumber');
+const doXtdCheckbox = document.getElementById('doXtd');
+const doAdventureCheckbox = document.getElementById('doAdventure');
+const doBuildWoodCheckbox = document.getElementById('doBuildWood');
+const readAndDelMailsCheckBox = document.getElementById('doReadAndDelMails');
+const doFLCheckbox = document.getElementById('doFL');
+const doRobFLCheckbox = document.getElementById('doRobFL');
+const doCompeteCheckbox = document.getElementById('doCompete');
+const doBreatheCheckbox = document.getElementById('doBreathe');
+const doAllAdsCheckbox = document.getElementById('doAllAds');
+const doVisitCheckbox = document.getElementById('doVisit');
+const doRuinCheckbox = document.getElementById('doRuin');
+const usePCandITCheckbox = document.getElementById('usePCandIT');
+const doInteractCheckbox = document.getElementById('doInteract');
+const doAccompanyCheckbox = document.getElementById('doAccompany');
+const doBrewCheckbox = document.getElementById('doBrew');
+const doBUmapCheckbox = document.getElementById('doBUmap');
+const doMaxDemonSealCheckbox = document.getElementById('doMaxDemonSeal');
+
+const doManLocCotCheckbox = document.getElementById('doManLocCot');
+const doManCSCotCheckbox = document.getElementById('doManCSCot');
+const doManStormCotCheckbox = document.getElementById('doManStormCot');
+const doManHeavenlyCotCheckbox = document.getElementById('doManHeavenlyCot');
+const doManACSCotCheckbox = document.getElementById('doManACSCot');
+const doPantheonRewardCheckbox = document.getElementById('doPantheonReward');
+
+const beastForageCheckbox = document.getElementById('beast-forage');
+const beastForageQuantity = document.getElementById('beast-forage-quantity');
+const heavenIntPillCheckbox = document.getElementById('heaven-int-pill');
+const heavenIntPillQuantity = document.getElementById('heaven-int-pill-quantity');
+const headenCrystalCheckbox = document.getElementById('headen-crystal');
+const headenCrystalQuantity = document.getElementById('headen-crystal-quantity');
+
+const buyLimitedAllianceShopCheckbox = document.getElementById('buyLimitedAllianceShop');
+const buyLimitedRuinShopCheckbox = document.getElementById('buyLimitedRuinShop');
+
+const originEssenceCheckbox = document.getElementById('origin-essence');
+const originEssenceQuantity = document.getElementById('origin-essence-quantity');
+const oetotalPriceSpan = document.createElement("span");
+const oelabel = document.querySelector("label[for='origin-essence-quantity']");
+
+const originSoulCheckbox = document.getElementById('origin-soul');
+const originSoulQuantity = document.getElementById('origin-soul-quantity');
+const ostotalPriceSpan = document.createElement("span");
+const oslabel = document.querySelector("label[for='origin-soul-quantity']");
+
+const originPsicrystalCheckbox = document.getElementById('origin-psicrystal');
+const originPsicrystalQuantity = document.getElementById('origin-psicrystal-quantity');
+const optotalPriceSpan = document.createElement("span");
+const oplabel = document.querySelector("label[for='origin-psicrystal-quantity']");
+
+const originGritCheckbox = document.getElementById('origin-grit');
+const originGritQuantity = document.getElementById('origin-grit-quantity');
+const ogtotalPriceSpan = document.createElement("span");
+const oglabel = document.querySelector("label[for='origin-grit-quantity']");
+
+const doBoutiqueCheckbox = document.getElementById('buyBoutiqueShop');
+const useBoutiqueKeyCheckbox = document.getElementById('useBoutiqueKey');
+
+const doXTshopCheckbox = document.getElementById('doXtShop');
+const doChaosCheckbox = document.getElementById('doChaos');
+
+const hellBfCheckbox = document.getElementById('hellBfCheckbox');
+const hellBfQuantity = document.getElementById('hellBfQuantity');
+const hellHpCheckbox = document.getElementById('hellHpCheckbox');
+const hellHpQuantity = document.getElementById('hellHpQuantity');
+const hellHcCheckbox = document.getElementById('hellHcCheckbox');
+const hellHcQuantity = document.getElementById('hellHcQuantity');
+
+const buyCompeteP4H1Checkbox = document.getElementById('buyCompeteP4H1');
+const buyCompeteTPP1Checkbox = document.getElementById('buyCompeteTPP1');
+const buyCompeteP4H2Checkbox = document.getElementById('buyCompeteP4H2');
+const buyCompeteTPP2Checkbox = document.getElementById('buyCompeteTPP2');
+
+const atkTroopsConquestValue = document.getElementById('atkTroops');
+const defTroopsConquestValue = document.getElementById('defTroops');
+
+if (auth.formdata) {
+		  // Remplissage du formulaire avec les données du localStorage
+
+    doTreeCheckbox.checked = auth.formdata.doTreeCheckbox;
+    doTreeIds.value = auth.formdata.doTreeIds;
+    doWorshipCheckbox.checked = auth.formdata.doWorshipCheckbox;
+    doWorshipId.value = auth.formdata.doWorshipId;
+    doBeastCheckbox.checked = auth.formdata.doBeastCheckbox;
+    beastLevel.value = auth.formdata.beastLevel;
+    doHellCheckbox.checked = auth.formdata.doHellCheckbox;
+    hellNumber.value = auth.formdata.hellNumber;
+    doPchatCheckbox.checked = auth.formdata.doPchatCheckbox;
+    doChaosCheckbox.checked = auth.formdata.doChaosCheckbox;
+    pantheonWord.value = auth.formdata.pantheonWord;
+    doSPCheckbox.checked = auth.formdata.doSPCheckbox;
+    spNumber.value = auth.formdata.spNumber;
+    doSTCheckbox.checked = auth.formdata.doSTCheckbox;
+    stNumber.value = auth.formdata.stNumber;
+    doVVCheckbox.checked = auth.formdata.doVVCheckbox;
+    vvNumber.value = auth.formdata.vvNumber;
+    doInteractEventCheckbox.checked = auth.formdata.doInteractEventCheckbox;
+    doInteractEventNumber.value = auth.formdata.doInteractEventNumber;
+    doXtdCheckbox.checked = auth.formdata.doXtdCheckbox;
+    doAdventureCheckbox.checked = auth.formdata.doAdventureCheckbox;
+    doBuildWoodCheckbox.checked = auth.formdata.doBuildWoodCheckbox;
+    readAndDelMailsCheckBox.checked = auth.formdata.readAndDelMailsCheckBox;
+    doFLCheckbox.checked = auth.formdata.doFLCheckbox;
+    doRobFLCheckbox.checked = auth.formdata.doRobFLCheckbox;
+    doCompeteCheckbox.checked = auth.formdata.doCompeteCheckbox;
+    doBreatheCheckbox.checked = auth.formdata.doBreatheCheckbox;
+    doVisitCheckbox.checked = auth.formdata.doVisitCheckbox;
+    doInteractCheckbox.checked = auth.formdata.doInteractCheckbox;
+    doAllAdsCheckbox.checked = auth.formdata.doAllAdsCheckbox;
+    doPantheonRewardCheckbox.checked = auth.formdata.doPantheonRewardCheckbox;
+    doAccompanyCheckbox.checked = auth.formdata.doAccompanyCheckbox;
+    doBrewCheckbox.checked = auth.formdata.doBrewCheckbox;
+    doBUmapCheckbox.checked = auth.formdata.doBUmapCheckbox;
+    doMaxDemonSealCheckbox.checked = auth.formdata.doMaxDemonSealCheckbox;
+
+    doManLocCotCheckbox.checked = auth.formdata.doManLocCotCheckbox;
+    doManCSCotCheckbox.checked = auth.formdata.doManCSCotCheckbox;
+    doManStormCotCheckbox.checked = auth.formdata.doManStormCotCheckbox;
+    doManHeavenlyCotCheckbox.checked = auth.formdata.doManHeavenlyCotCheckbox;
+    doManACSCotCheckbox.checked = auth.formdata.doManACSCotCheckbox;
+    doRuinCheckbox.checked = auth.formdata.doRuinCheckbox;
+    usePCandITCheckbox.checked = auth.formdata.usePCandITCheckbox;
+
+	//Alliance shop
+    buyLimitedAllianceShopCheckbox.checked = auth.formdata.buyLimitedAllianceShopCheckbox;
+    buyLimitedRuinShopCheckbox.checked = auth.formdata.buyLimitedRuinShopCheckbox;
+    originEssenceCheckbox.checked = auth.formdata.originEssenceCheckbox;
+    originEssenceQuantity.value = auth.formdata.originEssenceQuantity;
+    originSoulCheckbox.checked = auth.formdata.originSoulCheckbox;
+    originSoulQuantity.value = auth.formdata.originSoulQuantity;
+    originPsicrystalCheckbox.checked = auth.formdata.originPsicrystalCheckbox;
+    originPsicrystalQuantity.value = auth.formdata.originPsicrystalQuantity;
+    originGritCheckbox.checked = auth.formdata.originGritCheckbox;
+    originGritQuantity.value = auth.formdata.originGritQuantity;
+	//market shop
+    beastForageCheckbox.checked = auth.formdata.beastForageCheckbox;
+    beastForageQuantity.value = auth.formdata.beastForageQuantity;
+    heavenIntPillCheckbox.checked = auth.formdata.heavenIntPillCheckbox;
+    heavenIntPillQuantity.value = auth.formdata.heavenIntPillQuantity;
+    headenCrystalCheckbox.checked = auth.formdata.headenCrystalCheckbox;
+    headenCrystalQuantity.value = auth.formdata.headenCrystalQuantity;
+	//boutique shop
+    doBoutiqueCheckbox.checked = auth.formdata.doBoutiqueCheckbox;
+    useBoutiqueKeyCheckbox.checked = auth.formdata.useBoutiqueKeyCheckbox;
+    //XT shop
+    doXTshopCheckbox.checked = auth.formdata.doXTshopCheckbox;
+
+    //compete shop
+    buyCompeteP4H1Checkbox.checked = auth.formdata.buyCompeteP4H1Checkbox;
+    buyCompeteTPP1Checkbox.checked = auth.formdata.buyCompeteTPP1Checkbox;
+    buyCompeteP4H2Checkbox.checked = auth.formdata.buyCompeteP4H2Checkbox;
+    buyCompeteTPP2Checkbox.checked = auth.formdata.buyCompeteTPP2Checkbox;
+
+    //Hell shop
+    hellBfCheckbox.checked = auth.formdata.hellBfCheckbox;
+    hellBfQuantity.value = auth.formdata.hellBfQuantity;
+    hellHpCheckbox.checked = auth.formdata.hellHpCheckbox;
+    hellHpQuantity.value = auth.formdata.hellHpQuantity;
+    hellHcCheckbox.checked = auth.formdata.hellHcCheckbox;
+    hellHcQuantity.value = auth.formdata.hellHcQuantity;
+
+    //conquest    
+    atkTroopsConquestValue.value = auth.formdata.atkTroopsConquestValue;
+    defTroopsConquestValue.value = auth.formdata.defTroopsConquestValue;
+
+
+
+	// add price for alliance unlimited resources
+    oelabel.appendChild(oetotalPriceSpan);
+    var oeprice = getPrice(100, 20, originEssenceQuantity.value);
+    oetotalPriceSpan.innerHTML = `, current Total price: ${oeprice}`;
+
+    oslabel.appendChild(ostotalPriceSpan);
+    var osprice = getPrice(100, 20, originSoulQuantity.value);
+    ostotalPriceSpan.innerHTML = `, current Total price: ${osprice}`;
+
+    oplabel.appendChild(optotalPriceSpan);
+    var opprice = getPrice(200, 20, originPsicrystalQuantity.value);
+    optotalPriceSpan.innerHTML = `, current Total price: ${opprice}`;
+
+    oglabel.appendChild(ogtotalPriceSpan);
+    var ogprice = getPrice(400, 40, originGritQuantity.value);
+    ogtotalPriceSpan.innerHTML = `, current Total price: ${ogprice}`;
+}
+
+
+originEssenceQuantity.addEventListener("change", () => {
+    oeprice = getPrice(100, 20, originEssenceQuantity.value);
+    oetotalPriceSpan.innerHTML = `, current Total price: ${oeprice}`;
+});
+
+originSoulQuantity.addEventListener("change", () => {
+    osprice = getPrice(100, 20, originSoulQuantity.value);
+    ostotalPriceSpan.innerHTML = `, current Total price: ${osprice}`;
+});
+
+originPsicrystalQuantity.addEventListener("change", () => {
+    opprice = getPrice(200, 20, originPsicrystalQuantity.value);
+    optotalPriceSpan.innerHTML = `, current Total price: ${opprice}`;
+});
+
+originGritQuantity.addEventListener("change", () => {
+    ogprice = getPrice(400, 20, originGritQuantity.value);
+    ogtotalPriceSpan.innerHTML = `, current Total price: ${ogprice}`;
+});
+
+var actionsDiv = document.getElementById("actions");
+actionsDiv.addEventListener("change", () => {
+ console.log("---------------------- length -------------------");
+ console.log(actionsDiv.childNodes.length);
+});
+		// Ajout d'un listener sur la soumission du formulaire
+document.getElementById('user-form').addEventListener('submit', (event) => {
+    event.preventDefault();
+		  // Récupération des valeurs du formulaire
+    const formData = {
+       atkTroopsConquestValue: atkTroopsConquestValue.value,        
+       defTroopsConquestValue: defTroopsConquestValue.value,        
+       beastForageCheckbox: beastForageCheckbox.checked,
+       beastForageQuantity: beastForageQuantity.value,
+       heavenIntPillCheckbox: heavenIntPillCheckbox.checked,
+       heavenIntPillQuantity: heavenIntPillQuantity.value,
+       headenCrystalCheckbox: headenCrystalCheckbox.checked,
+       headenCrystalQuantity: headenCrystalQuantity.value,
+       doTreeCheckbox: doTreeCheckbox.checked,
+       doTreeIds: doTreeIds.value,
+       doWorshipCheckbox: doWorshipCheckbox.checked,
+       doWorshipId: doWorshipId.value,
+       doBeastCheckbox: doBeastCheckbox.checked,
+       beastLevel: beastLevel.value,
+       doHellCheckbox: doHellCheckbox.checked,
+       hellNumber: hellNumber.value,
+       doPchatCheckbox: doPchatCheckbox.checked,
+       doChaosCheckbox: doChaosCheckbox.checked,
+       pantheonWord: pantheonWord.value,
+       doSPCheckbox: doSPCheckbox.checked,
+       spNumber: spNumber.value,
+       doSTCheckbox: doSTCheckbox.checked,
+       stNumber: stNumber.value,       
+       doVVCheckbox: doVVCheckbox.checked,
+       vvNumber: vvNumber.value,  
+       doInteractEventCheckbox: doInteractEventCheckbox.checked,
+       doInteractEventNumber: doInteractEventNumber.value,
+       doXtdCheckbox: doXtdCheckbox.checked,
+       doAdventureCheckbox: doAdventureCheckbox.checked,
+       doBuildWoodCheckbox: doBuildWoodCheckbox.checked,
+       readAndDelMailsCheckBox: readAndDelMailsCheckBox.checked,
+       doFLCheckbox: doFLCheckbox.checked,
+       doRobFLCheckbox: doRobFLCheckbox.checked,
+       doCompeteCheckbox: doCompeteCheckbox.checked,
+       doBreatheCheckbox: doBreatheCheckbox.checked,
+       doVisitCheckbox: doVisitCheckbox.checked,
+       doInteractCheckbox: doInteractCheckbox.checked,
+       doAccompanyCheckbox: doAccompanyCheckbox.checked,
+       doBrewCheckbox: doBrewCheckbox.checked,
+       doBUmapCheckbox: doBUmapCheckbox.checked,
+       doBoutiqueCheckbox: doBoutiqueCheckbox.checked,
+       doRuinCheckbox: doRuinCheckbox.checked,
+       usePCandITCheckbox: usePCandITCheckbox.checked,
+       useBoutiqueKeyCheckbox: useBoutiqueKeyCheckbox.checked,
+       doAllAdsCheckbox: doAllAdsCheckbox.checked,
+       doPantheonRewardCheckbox: doPantheonRewardCheckbox.checked,
+       doManLocCotCheckbox: doManLocCotCheckbox.checked,
+       doManCSCotCheckbox: doManCSCotCheckbox.checked,
+       doManStormCotCheckbox: doManStormCotCheckbox.checked,
+       doManHeavenlyCotCheckbox: doManHeavenlyCotCheckbox.checked,
+       doManACSCotCheckbox: doManACSCotCheckbox.checked,
+       doXTshopCheckbox: doXTshopCheckbox.checked,
+       doMaxDemonSealCheckbox: doMaxDemonSealCheckbox.checked,
+
+       buyLimitedAllianceShopCheckbox: buyLimitedAllianceShopCheckbox.checked,
+       buyLimitedRuinShopCheckbox: buyLimitedRuinShopCheckbox.checked,
+       originEssenceCheckbox: originEssenceCheckbox.checked,
+       originEssenceQuantity: originEssenceQuantity.value,
+       originSoulCheckbox: originSoulCheckbox.checked,
+       originSoulQuantity: originSoulQuantity.value,
+       originPsicrystalCheckbox: originPsicrystalCheckbox.checked,
+       originPsicrystalQuantity: originPsicrystalQuantity.value,
+       originGritCheckbox: originGritCheckbox.checked,
+       originGritQuantity: originGritQuantity.value,
+
+       hellBfCheckbox: hellBfCheckbox.checked,
+       hellBfQuantity: hellBfQuantity.value,
+       hellHpCheckbox: hellHpCheckbox.checked,
+       hellHpQuantity: hellHpQuantity.value,
+       hellHcCheckbox: hellHcCheckbox.checked,
+       hellHcQuantity: hellHcQuantity.value,
+
+       buyCompeteP4H1Checkbox: buyCompeteP4H1Checkbox.checked,
+       buyCompeteTPP1Checkbox: buyCompeteTPP1Checkbox.checked,
+       buyCompeteP4H2Checkbox: buyCompeteP4H2Checkbox.checked,
+       buyCompeteTPP2Checkbox: buyCompeteTPP2Checkbox.checked
+
+
+   };
+
+		  // Ajout des données du formulaire à l'utilisateur
+   auth.formdata = formData;
+   console.log(auth);
+		  // Enregistrement des données de l'utilisateur dans le localStorage
+   auths[index] = auth;
+   alert("Settings changed successfully!");
+   localStorage.setItem('auths', JSON.stringify(auths));
+});
+
+		// Création du bouton de suppression
+const deleteButton = document.getElementById('delete-button');
+
+deleteButton.addEventListener('click', () => {
+   auths.splice(index, 1);
+   localStorage.setItem('auths', JSON.stringify(auths));
+   alert('User deleted successfully!');
+		    window.location.href = 'listAccount.html'; 
+		});
+document.getElementById('user-form').appendChild(deleteButton);
+
+
+
+// Récupérer l'argument userIndex de l'URL
+const urlParams = new URLSearchParams(window.location.search);
+let userIndex = parseInt(urlParams.get("userIndex"));
+
+// Vérifier si le bouton "Précédent" doit être affiché
+const previousButton = document.createElement("button");
+previousButton.innerHTML = "Previous";
+previousButton.classList.add("btn", "btn-primary", "mr-2");
+if (userIndex > 0) {
+  previousButton.addEventListener("click", () => {
+    userIndex--;
+    window.location.href = `user.html?userIndex=${userIndex}`;
+  });
+} else {
+  previousButton.disabled = true; // Désactiver le bouton s'il n'est pas nécessaire
+}
+
+const nextButton = document.createElement("button");
+nextButton.innerHTML = "Next";
+nextButton.classList.add("btn", "btn-primary");
+if (userIndex < auths.length - 1) {
+  nextButton.addEventListener("click", () => {
+    userIndex++;
+    window.location.href = `user.html?userIndex=${userIndex}`;
+  });
+} else {
+  nextButton.disabled = true; // Désactiver le bouton s'il n'est pas nécessaire
+}
+const userDetailsH1 = document.querySelector("h1");
+userDetailsH1.insertAdjacentElement("afterend", nextButton);
+userDetailsH1.insertAdjacentElement("afterend", previousButton);
+</script>
+</body>
+</html>
